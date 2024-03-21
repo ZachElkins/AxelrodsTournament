@@ -99,3 +99,8 @@
 .score-input {
     width: 50px;
 }
+
+.editor {
+    border: 1px solid gray;
+    border-radius: 5px;
+}

@@ -4,6 +4,11 @@ import GameResults from './GameResults';
 import './index.css'
 import GameSettings from './GameSettings';
 import OpponentSelector from './OpponentSelector';
+import AceEditor from "react-ace";
+
+import "ace-builds/src-noconflict/mode-python";
+import "ace-builds/src-noconflict/theme-github";
+import "ace-builds/src-noconflict/ext-language_tools";
 
 const deserialize = (json: string): Player[] => JSON.parse(json) as Player[];
 
@@ -13,8 +18,8 @@ function App() {
 from axelpy.player import Player\n\
 from axelpy.moves import COOPERATE, DEFECT\n\n\
 class CustomPlayer(Player):\n\
-  def strategy(self, opponent_history):\n\
-    return COOPERATE if not opponent_history else opponent_history[-1]")
+\tdef strategy(self, opponent_history):\n\
+\t\treturn COOPERATE if not opponent_history else opponent_history[-1]")
 
   const [res, setRes] = useState<string>();
   const [players, setPlayers] = useState<Player[]>([]);
@@ -50,7 +55,21 @@ class CustomPlayer(Player):\n\
       <div>
         <input type='text' value={name} onChange={({target}) => setName(target.value)}></input>
         <br/>
-        <textarea value={customPlayer} rows='8' cols='75' onChange={({target}) => setCustomPlayer(target.value)}></textarea>
+        <AceEditor 
+          height='15em'
+          width='50em'
+          mode="python"
+          theme="github"
+          onChange={setCustomPlayer}
+          value={customPlayer}
+          editorProps={{ $blockScrolling: true }}
+          setOptions={{
+            enableBasicAutocompletion: true,
+            enableLiveAutocompletion: true,
+            enableSnippets: true
+          }}
+          className='editor'
+        />
         <GameSettings />
         <OpponentSelector onChange={setOpponent}/>
         <input type='submit' value='Submit' onClick={run}></input>

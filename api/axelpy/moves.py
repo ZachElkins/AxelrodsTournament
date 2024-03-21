@@ -1,0 +1,2 @@
+COOPERATE = 'C'
+DEFECT = 'D'
